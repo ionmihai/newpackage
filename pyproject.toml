@@ -1,0 +1,22 @@
+[build-system]
+requires = ["hatchling>=1.21"]
+build-backend = "hatchling.build"
+
+[project]
+name = "newpackage"
+version = "0.1.0"
+description = "Scaffold a src-layout MIT-licensed Python package and optionally run shortgit init."
+readme = "README.md"
+requires-python = ">=3.9"
+license = { file = "LICENSE" }
+authors = [{ name = "Mihai Ion" }]
+dependencies = [
+  "typer>=0.12",
+  "shortgit>=0.1.0",
+]
+
+[project.scripts]
+newpackage = "newpackage.cli:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/newpackage"]
