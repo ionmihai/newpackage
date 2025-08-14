@@ -2,10 +2,9 @@
 
 `newpackage` is a CLI tool for scaffolding opinionated Python packages with a `src/` layout, MIT license, and sensible defaults for modern Python packaging.
 
-* Creates a project with the same structure as `shortgit` (or other reference packages)
 * MIT License included automatically with year and author
-* Initializes a GitHub repo via `shortgit init` (without pushing)
-* Designed for reproducible, distributable Python packages (pip- and mamba-installable)
+* Optionally initializes a GitHub repo via `shortgit init` (without pushing)
+* Creates `puproject.toml` designed for reproducible, distributable Python packages
 
 ---
 
@@ -14,7 +13,7 @@
 * Python 3.9+
 * `git` installed and on `PATH`
 * GitHub CLI `gh` installed and authenticated: `gh auth login`
-* `shortgit` installed (for repo bootstrapping)
+* `shortgit` installed (for repo bootstrapping); use `--no-init` option if you don't need this
 
 ---
 
