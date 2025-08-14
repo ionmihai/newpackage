@@ -62,14 +62,15 @@ newpackage <project_name> [OPTIONS]
 
 ### Key options:
 
+Run `newpackage --help` for full set of options.
+
 * **--author**: Author name for LICENSE and `pyproject.toml` 
 * **--description**: Short package description 
 * **--private**: Make the GitHub repo private instead of public 
 
-Run `newpackage --help` for full set of options.
 ---
 
-## Example
+## Examples
 
 ```bash
 # Public repo
