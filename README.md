@@ -53,19 +53,20 @@ This will create:
 ## Command Reference
 
 ```bash
-newpackage <project_name> --author <author_name> [--description <desc>] [--private]
+newpackage <project_name> [OPTIONS]
 ```
 
 ### Positional arguments:
 
 * **project\_name**: Name of the new package (used for folder, PyPI name, and src subfolder)
 
-### Options:
+### Key options:
 
-* **--author**: Author name for LICENSE and `pyproject.toml` (required)
-* **--description**: Short package description (optional)
-* **--private**: Make the GitHub repo private instead of public (optional)
+* **--author**: Author name for LICENSE and `pyproject.toml` 
+* **--description**: Short package description 
+* **--private**: Make the GitHub repo private instead of public 
 
+Run `newpackage --help` for full set of options.
 ---
 
 ## Example
