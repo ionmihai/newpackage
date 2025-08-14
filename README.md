@@ -72,8 +72,12 @@ Run `newpackage --help` for full set of options.
 ## Examples
 
 ```bash
-# Public repo
-newpackage coolutils --author "Jane Doe"
+# No repo init
+newpackage mypkg --no-init
+
+# Public repos
+newpackage coolutils 
+newpackage cool-tool --author 'ACME, Inc.' --import-name cooltool -v 0.1.0 -p 3.10
 
 # Private repo with description
 newpackage secretlib --author "Jane Doe" --description "Private utilities" --private

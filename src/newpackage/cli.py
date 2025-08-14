@@ -4,18 +4,7 @@ from typing import Optional
 from enum import Enum
 import typer
 
-app = typer.Typer(
-    add_completion=False,
-    help=(
-        "newpackage — scaffold a src-layout MIT-licensed Python package and optionally run shortgit init.\n\n"
-        "Usage:\n  newpackage <package_name>  [options]\n\n"
-        "Examples:\n"
-        "  newpackage shortgit --author 'John Doe'\n"
-        "  newpackage mylib --author 'Jane Doe' --no-init\n"
-        "  newpackage cool-tool --author 'ACME, Inc.' --import-name cooltool -v 0.1.0 -p 3.10\n"
-        "  newpackage mypkg --author 'Jane Doe' --org my-org --visibility private --description 'My package'\n"
-    ),
-)
+app = typer.Typer(add_completion=False)
 
 # ---------------- utils ----------------
 
