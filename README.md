@@ -4,7 +4,7 @@
 
 * MIT License included automatically with year and author
 * Optionally initializes a GitHub repo via `shortgit init` (without pushing)
-* Creates `puproject.toml` designed for reproducible, distributable Python packages
+* Creates `pyproject.toml` designed for reproducible, distributable Python packages
 
 ---
 
