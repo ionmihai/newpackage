@@ -71,6 +71,11 @@ __pycache__/
 .venv/
 venv/
 
+# Environment variables & secrets
+.env
+.env.*
+*.env
+
 # Build artifacts
 build/
 dist/

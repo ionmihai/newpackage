@@ -7,14 +7,23 @@ __pycache__/
 .ruff_cache/
 .venv/
 venv/
+
+# Environment variables & secrets
+.env
+.env.*
+*.env
+
 # Build artifacts
 build/
 dist/
+
 # IDE
 .idea/
 .vscode/
+
 # Data directories
 **/data/**
+
 # Common data files
 *.parquet
 *.pq
