@@ -205,7 +205,9 @@ def create(
         raise RuntimeError(f"Target directory '{project_dir}' exists and is not empty.")
 
     # Create folders
-    (project_dir / f"src/{pkg}").mkdir(parents=True, exist_ok=True)
+    (project_dir / f"src/{pkg}/_cli").mkdir(parents=True, exist_ok=True)
+    (project_dir / f"src/{pkg}/_config").mkdir(parents=True, exist_ok=True)
+    (project_dir / f"src/{pkg}/_infrastructure").mkdir(parents=True, exist_ok=True)
     (project_dir / "data").mkdir(parents=True, exist_ok=True)           #For testing, will be gitignored
     (project_dir / "notebooks_dev").mkdir(parents=True, exist_ok=True)  #For testing, will be gitignored
 
@@ -215,16 +217,14 @@ def create(
     # Write files
     (project_dir / "LICENSE").write_text(MIT_TEMPLATE.format(year=year, author=author), encoding="utf-8")
     (project_dir / ".gitignore").write_text(GITIGNORE_TEMPLATE, encoding="utf-8")
-    (project_dir / "README.md").write_text(
-        README_TEMPLATE.format(project_name=package_name, import_name=pkg, author=author, year=year),
-        encoding="utf-8",
-    )
+    (project_dir / "README.md").write_text(README_TEMPLATE.format(project_name=package_name, import_name=pkg, author=author, year=year), encoding="utf-8",)
+    (project_dir / "pyproject.toml").write_text(pyproject_toml(package_name, pkg, version, py_min, author), encoding="utf-8",)
+    
     (project_dir / f"src/{pkg}/__init__.py").write_text("__all__ = []\n", encoding="utf-8")
-    (project_dir / "pyproject.toml").write_text(
-        pyproject_toml(package_name, pkg, version, py_min, author),
-        encoding="utf-8",
-    )
-
+    (project_dir / f"src/{pkg}/_cli/__init__.py").write_text(" ", encoding="utf-8")
+    (project_dir / f"src/{pkg}/_config/__init__.py").write_text(" ", encoding="utf-8")
+    (project_dir / f"src/{pkg}/_infrastructure/__init__.py").write_text(" ", encoding="utf-8")
+    
     typer.echo(f"Scaffolded {package_name} at {project_dir}")
 
     # Optionally run shortgit init in the new folder (no push)
