@@ -87,6 +87,9 @@ dist/
 # Data directories
 **/data/**
 
+# Scratch notebooks used in dev
+**/notebooks_dev/**
+
 # Common data files
 *.parquet
 *.pq
@@ -159,7 +162,11 @@ readme = "README.md"
 requires-python = ">={py_min}"
 license = {{file = "LICENSE"}}
 authors = [{{name = "{author}"}}]
+
 dependencies = []
+
+[project.optional-dependencies]
+dev = []
 
 [project.scripts]
 {import_name} = "{import_name}.cli:main"
@@ -199,6 +206,8 @@ def create(
 
     # Create folders
     (project_dir / f"src/{pkg}").mkdir(parents=True, exist_ok=True)
+    (project_dir / "data").mkdir(parents=True, exist_ok=True)           #For testing, will be gitignored
+    (project_dir / "notebooks_dev").mkdir(parents=True, exist_ok=True)  #For testing, will be gitignored
 
     # Compute year once
     year = datetime.datetime.now().year
