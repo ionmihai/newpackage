@@ -1,4 +1,7 @@
-import subprocess, shutil, datetime, re
+import subprocess 
+import shutil
+import datetime
+import re
 from pathlib import Path
 from typing import Optional
 from enum import Enum
@@ -19,11 +22,9 @@ def run(cmd, cwd: Optional[Path] = None) -> str:
         )
     return p.stdout.strip()
 
-
 def ensure_tool(name: str, url: str):
     if shutil.which(name) is None:
         raise RuntimeError(f"'{name}' not found on PATH. Install it: {url}")
-
 
 def normalize_import_name(name: str) -> str:
     s = name.strip().lower().replace('-', '_')
@@ -32,17 +33,14 @@ def normalize_import_name(name: str) -> str:
         s = f"pkg_{s}"
     return s
 
-
 class Visibility(str, Enum):
     public = "public"
     private = "private"
     internal = "internal"
 
-
 def render_template(name: str, **params) -> str:
     text = (TEMPLATE_DIR / name).read_text(encoding="utf-8")
     return text.format(**params)
-
 
 # ---------------- command ----------------
 
@@ -126,6 +124,8 @@ def create(
             typer.echo(f"shortgit init failed: {e}")
             raise
 
+def main(): 
+    app()
 
-def main(): app()
-if __name__ == "__main__": main()
+if __name__ == "__main__": 
+    main()
