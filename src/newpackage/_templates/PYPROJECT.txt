@@ -1,0 +1,26 @@
+[build-system]
+requires = ["hatchling>=1.21"]
+build-backend = "hatchling.build"
+
+[project]
+name = "{project_name}"
+version = "{version}"
+description = "A new Python package scaffolded by newpackage."
+readme = "README.md"
+requires-python = ">={py_min}"
+license = {{file = "LICENSE"}}
+authors = [{{name = "{author}"}}]
+
+dependencies = []
+
+[project.optional-dependencies]
+dev = []
+
+[project.scripts]
+{import_name} = "{import_name}.cli:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/{import_name}"]
+
+[tool.hatch.build]
+include = ["src/**/_templates/**"]
