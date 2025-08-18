@@ -4,6 +4,9 @@ from typing import Optional
 from enum import Enum
 import typer
 
+HERE = Path(__file__).parent
+TEMPLATE_DIR = HERE / "_templates"
+
 app = typer.Typer(add_completion=False)
 
 # ---------------- utils ----------------
@@ -36,144 +39,9 @@ class Visibility(str, Enum):
     internal = "internal"
 
 
-# ---------------- file templates ----------------
-
-MIT_TEMPLATE = """MIT License
-
-Copyright (c) {year} {author}
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-"""
-
-GITIGNORE_TEMPLATE = """# Python
-__pycache__/
-*.py[cod]
-*.egg-info/
-.pytest_cache/
-.mypy_cache/
-.ruff_cache/
-.venv/
-venv/
-
-# Environment variables & secrets
-.env
-.env.*
-*.env
-
-# Build artifacts
-build/
-dist/
-
-# IDE
-.idea/
-.vscode/
-
-# Data directories
-**/data/**
-
-# Scratch notebooks used in dev
-**/notebooks_dev/**
-
-# Common data files
-*.parquet
-*.pq
-*.feather
-*.pkl
-*.pickle
-*.csv
-*.tsv
-*.txt
-*.jsonl
-*.json
-*.dta
-*.sas7bdat
-*.xpt
-*.sav
-*.zsav
-*.rds
-*.RData
-*.xlsx
-*.xls
-*.xlsm
-*.xlsb
-*.h5
-*.hdf5
-*.npz
-*.npy
-"""
-
-README_TEMPLATE = """# {project_name}
-
-{project_name} — scaffolded by **newpackage**.
-
-**Author:** {author}  
-**License:** MIT (c) {year} {author}
-
-## Layout
-```
-{project_name}/
-  ├─ pyproject.toml
-  ├─ README.md
-  ├─ LICENSE
-  ├─ .gitignore
-  └─ src/
-     └─ {import_name}/
-        └─ __init__.py
-```
-
-## Development install
-```bash
-pip install -e .
-```
-
-## Notes
-- MIT license included.
-- `src` layout with explicit package map in `pyproject.toml`.
-- A console script entry point is pre-wired to `{import_name}.cli:main` and exposes the `{import_name}` command. Create `src/{import_name}/cli.py` with a `main()` to activate it.
-"""
-
-
-def pyproject_toml(project_name: str, import_name: str, version: str, py_min: str, author: str) -> str:
-    return f"""[build-system]
-requires = ["hatchling>=1.21"]
-build-backend = "hatchling.build"
-
-[project]
-name = "{project_name}"
-version = "{version}"
-description = "A new Python package scaffolded by newpackage."
-readme = "README.md"
-requires-python = ">={py_min}"
-license = {{file = "LICENSE"}}
-authors = [{{name = "{author}"}}]
-
-dependencies = []
-
-[project.optional-dependencies]
-dev = []
-
-[project.scripts]
-{import_name} = "{import_name}.cli:main"
-
-[tool.hatch.build.targets.wheel]
-packages = ["src/{import_name}"]
-"""
+def render_template(name: str, **params) -> str:
+    text = (TEMPLATE_DIR / name).read_text(encoding="utf-8")
+    return text.format(**params)
 
 
 # ---------------- command ----------------
@@ -213,13 +81,20 @@ def create(
 
     # Compute year once
     year = datetime.datetime.now().year
+    ctx = dict(
+        project_name=package_name,
+        import_name=pkg,
+        author=author,
+        year=year,
+        version=version,
+        py_min=py_min,
+    )
 
-    # Write files
-    (project_dir / "LICENSE").write_text(MIT_TEMPLATE.format(year=year, author=author), encoding="utf-8")
-    (project_dir / ".gitignore").write_text(GITIGNORE_TEMPLATE, encoding="utf-8")
-    (project_dir / "README.md").write_text(README_TEMPLATE.format(project_name=package_name, import_name=pkg, author=author, year=year), encoding="utf-8",)
-    (project_dir / "pyproject.toml").write_text(pyproject_toml(package_name, pkg, version, py_min, author), encoding="utf-8",)
-    
+    (project_dir / "LICENSE").write_text(render_template("LICENSE_MIT.txt", **ctx), encoding="utf-8")
+    (project_dir / ".gitignore").write_text(render_template("GITIGNORE.txt", **ctx), encoding="utf-8")
+    (project_dir / "README.md").write_text(render_template("README.txt", **ctx), encoding="utf-8")
+    (project_dir / "pyproject.toml").write_text(render_template("PYPROJECT.txt", **ctx), encoding="utf-8")
+
     (project_dir / f"src/{pkg}/__init__.py").write_text("__all__ = []\n", encoding="utf-8")
     (project_dir / f"src/{pkg}/_cli/__init__.py").write_text(" ", encoding="utf-8")
     (project_dir / f"src/{pkg}/_config/__init__.py").write_text(" ", encoding="utf-8")
