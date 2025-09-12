@@ -21,11 +21,11 @@ dev = [
     "ipykernel>=6.29"
 ]
 
-[project.scripts]
-#{import_name} = "{import_name}.cli:main"
-
 [tool.hatch.build.targets.wheel]
 packages = ["src/{import_name}"]
 
+[project.scripts]
+#{import_name} = "{import_name}.cli:main"
+
 [tool.hatch.build]
-#include = ["src/**/_templates/**"]
+#include = ["src/**/_resources/**"]

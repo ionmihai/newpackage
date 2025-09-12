@@ -4,8 +4,12 @@
 # Data directories
 **/data/**
 
+# External file (e.g. documentation documents from data vendor)
+**/external/**
+
 # Scratch notebooks used in dev
-**/notebooks/**
+**/notebooks/dev**
+**/notebooks/test**
 
 # Common data files
 *.parquet

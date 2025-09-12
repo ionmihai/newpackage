@@ -71,11 +71,12 @@ def create(
         raise RuntimeError(f"Target directory '{project_dir}' exists and is not empty.")
 
     # Create folders
-    (project_dir / f"src/{pkg}/_cli").mkdir(parents=True, exist_ok=True)
-    (project_dir / f"src/{pkg}/_config").mkdir(parents=True, exist_ok=True)
-    (project_dir / f"src/{pkg}/_infrastructure").mkdir(parents=True, exist_ok=True)
+    (project_dir / f"src/{pkg}").mkdir(parents=True, exist_ok=True)
+    (project_dir / "external").mkdir(parents=True, exist_ok=True)           #Documentation files from the vendor, will be gitignored
     (project_dir / "data").mkdir(parents=True, exist_ok=True)           #For testing, will be gitignored
-    (project_dir / "notebooks_dev").mkdir(parents=True, exist_ok=True)  #For testing, will be gitignored
+    (project_dir / "notebooks/dev").mkdir(parents=True, exist_ok=True)  #For dev experiments, will be gitignored
+    (project_dir / "notebooks/test").mkdir(parents=True, exist_ok=True)  #For testing, will be gitignored
+    (project_dir / "notebooks/docs").mkdir(parents=True, exist_ok=True)  #For reporting on functionality, will NOT be gitignored
 
     # Compute year once
     year = datetime.datetime.now().year
@@ -88,15 +89,12 @@ def create(
         py_min=py_min,
     )
 
+    # Create files
     (project_dir / "LICENSE").write_text(render_template("LICENSE_MIT.txt", **ctx), encoding="utf-8")
     (project_dir / ".gitignore").write_text(render_template("GITIGNORE.txt", **ctx), encoding="utf-8")
     (project_dir / "README.md").write_text(render_template("README.txt", **ctx), encoding="utf-8")
     (project_dir / "pyproject.toml").write_text(render_template("PYPROJECT.txt", **ctx), encoding="utf-8")
-
     (project_dir / f"src/{pkg}/__init__.py").write_text("__all__ = []\n", encoding="utf-8")
-    (project_dir / f"src/{pkg}/_cli/__init__.py").write_text(" ", encoding="utf-8")
-    (project_dir / f"src/{pkg}/_config/__init__.py").write_text(" ", encoding="utf-8")
-    (project_dir / f"src/{pkg}/_infrastructure/__init__.py").write_text(" ", encoding="utf-8")
     
     typer.echo(f"Scaffolded {package_name} at {project_dir}")
 
