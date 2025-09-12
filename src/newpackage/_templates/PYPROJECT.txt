@@ -11,16 +11,21 @@ requires-python = ">={py_min}"
 license = {{file = "LICENSE"}}
 authors = [{{name = "{author}"}}]
 
-dependencies = []
+dependencies = [
+    "pandas>=2.1",
+    "pyarrow"
+]
 
 [project.optional-dependencies]
-dev = []
+dev = [
+    "ipykernel>=6.29"
+]
 
 [project.scripts]
-{import_name} = "{import_name}.cli:main"
+#{import_name} = "{import_name}.cli:main"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/{import_name}"]
 
 [tool.hatch.build]
-include = ["src/**/_templates/**"]
+#include = ["src/**/_templates/**"]

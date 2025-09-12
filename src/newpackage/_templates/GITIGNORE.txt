@@ -5,9 +5,7 @@
 **/data/**
 
 # Scratch notebooks used in dev
-**/notebooks/dev/**
-**/notebooks/test/**
-**/notebooks/report/**
+**/notebooks/**
 
 # Common data files
 *.parquet
