@@ -50,7 +50,7 @@ def create(
     author: str = typer.Option("Author Name", "--author", "-a", help="Author name for LICENSE, README, and pyproject (required)"),
     import_name: Optional[str] = typer.Option(None, "--import-name", "-i", help="Import/package folder name (default: derived from package_name)"),
     version: str = typer.Option("0.1.0", "--version", "-v", help="Initial version"),
-    py_min: str = typer.Option("3.9", "--python", "-p", help="Minimum Python version"),
+    py_min: str = typer.Option("3.12", "--python", "-p", help="Minimum Python version"),
     description: Optional[str] = typer.Option(None, "--description", "-d", help="GitHub repo description for shortgit init"),
     org: Optional[str] = typer.Option(None, "--org", help="GitHub org/owner for shortgit init"),
     visibility: Visibility = typer.Option(Visibility.public, "--visibility", help="Visibility for shortgit init"),
