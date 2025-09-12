@@ -1,13 +1,13 @@
 # Environment variables & secrets
 .env
-.env.*
-*.env
 
 # Data directories
 **/data/**
 
 # Scratch notebooks used in dev
-**/notebooks_dev/**
+**/notebooks/dev/**
+**/notebooks/test/**
+**/notebooks/report/**
 
 # Common data files
 *.parquet

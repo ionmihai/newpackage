@@ -5,7 +5,7 @@ build-backend = "hatchling.build"
 [project]
 name = "{project_name}"
 version = "{version}"
-description = "A new Python package scaffolded by newpackage."
+description = "Package description."
 readme = "README.md"
 requires-python = ">={py_min}"
 license = {{file = "LICENSE"}}
