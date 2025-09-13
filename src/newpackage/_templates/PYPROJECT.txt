@@ -24,6 +24,13 @@ dev = [
 [tool.hatch.build.targets.wheel]
 packages = ["src/{import_name}"]
 
+[tool.ruff]
+target-version = "py312"
+select = ["E", "F"] #no auto formatting, just linting
+ignore = ["E501"]
+src = ["src", "tests"]
+exclude = [".venv", ".nox", "build", "dist", "docs"]
+
 [project.scripts]
 #{import_name} = "{import_name}.cli:main"
 
